@@ -11,11 +11,12 @@ This is recommendation opensource with python + spark. The source is only for st
 . source : https://github.com/raghavjajodia/steamGameRec  
 . form : index , steamid , appid , playtime
 
-- User playtime data filtered : filtered data  
+- User playtime data filtered : filtered upper playtime data  
 . /data/game_user_data_filtered.csv  
 . form : steamID , appID , playtime  
 
 - Game average playtime data  
+. From steamspy api
 . /data/game_average_data.csv  
 . form : steamID , playtime
 

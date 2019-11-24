@@ -1,6 +1,8 @@
 from pyspark import SparkContext
 from pyspark.mllib.recommendation import ALS, Rating
 from getGameData import getGameTitle
+from pyspark.ml.feature import StringIndexer
+
 
 GAME_USER_DATA_PATH = "./data/game_user_data_filtered.csv"
 
@@ -38,9 +40,12 @@ def train():
 
     # row : steamid , userid , rating
     for row in recommendations:
-        print(getGameTitle(row[2]))
+        print(getGameTitle(row[2]),":",row[2])
     
     print("***** Train stopped *****")
+    print("***** Start Saving Model *****")
+    
+    StringIndexer(inputCol="foo", outputCol="bar").write().save("/data/")
 
 if __name__ == "__main__":
     train()

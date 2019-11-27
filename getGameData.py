@@ -5,6 +5,7 @@ from collections import defaultdict
 GAME_AVERAGE_DATA_PATH = "./data/game_average_data.csv"
 GAME_USER_DATA_PATH = "./data/game_user_data_filtered.csv"
 GAME_AVERAGE_DATA_ADDED_PATH = "./data/game_average_data_added.csv"
+GAME_APPID_ALL_PATH = "./data/game_appid_all.txt"
 
 
 def getRating(playtime, averageTime):
@@ -125,9 +126,14 @@ def getGameTitle(appid):
 
 
 def getAllGames():
-    URL = 'https://api.steampowered.com/ISteamApps/GetAppList/v2/'
-    response = requests.get(URL)
-    obj = response.json()
+    obj = dict()
+
+    file = open(GAME_APPID_ALL_PATH, "r")
+    lines = file.readlines()
+    
+    for appid in lines:
+        appid = appid.replace("\n","")
+        obj[appid] = -1
 
     return obj
 
@@ -175,61 +181,53 @@ def addGameAverageByUserData():
     print("***** All average playtime added ! *****")
 
 
-def getPrevId():
-    if os.path.isfile(GAME_AVERAGE_DATA_PATH):
-        file = open(GAME_AVERAGE_DATA_PATH, 'r')
-        last = file.readlines()[-1]
-        file.close()
-        
-        return last.split(',')[0]
-    else:
-        file = open(GAME_AVERAGE_DATA_PATH, 'w')
-        file.write('')
-        file.close()
-        
-        return None
+def getPrevs(obj):
+    file = open(GAME_AVERAGE_DATA_PATH, 'r')
+    lines = file.readlines()
+    file.close()
+    
+    for line in lines:
+        appid, time = line.split(",")
+        obj[appid] = int(time)    
+
+    return obj
+
+
+def getAverageTime(appid):
+    URL = 'https://steamspy.com/api.php?request=appdetails&appid='
+    URL += appid
+
+    response = requests.get(URL)
+
+    try:
+        obj = response.json()
+    except:
+        print(response)
+
+    return int(obj['average_forever'] / 60)
 
 
 def makeGameAveragePlayTime():
     obj = getAllGames()
-    prev = getPrevId()
-
-    data = dict()
+    obj = getPrevs(obj)
 
     loopIndex = 0
     
-    for ob in obj['applist']['apps']:
-        appid = str(ob['appid'])
-
-        # If prev data exists, start from the last
-        if prev != None:
-            if appid == prev :
-                print("Starting from", appid)
-                prev = None
-            continue
-        
-        URL = 'https://steamspy.com/api.php?request=appdetails&appid='
-        URL += appid
-
-        response = requests.get(URL)
-        if response == None :
+    for appid,time in obj.items():
+        if time != -1:
             continue
 
-        try:
-            obj = response.json()
-        except:
-            print(response)
-
-        data[appid] =int(obj['average_forever'] / 60)
+        obj[appid] = getAverageTime(appid)
+        print(appid,obj[appid])
         
         loopIndex += 1
-        if (loopIndex%5000) == 0:
+        if (loopIndex%40000) == 0:
             print(loopIndex)
             break
 
-    file = open(GAME_AVERAGE_DATA_PATH, 'a')
-    for key,val in data.items():
-        file.write(str(key) + ',' + str(val) + '\n')
+    file = open(GAME_AVERAGE_DATA_PATH, 'w')
+    for key,val in obj.items():
+        file.write(str(key) + ',' + str(val) + "\n")
 
     file.close()
 

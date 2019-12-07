@@ -1,0 +1,30 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CRAWLING_ERROR_CODE	util.py	/^CRAWLING_ERROR_CODE = -2$/;"	v	line:9
+DEFAULT_CODE	getGameData.py	/^DEFAULT_CODE = -1$/;"	v	line:13
+DEFAULT_CODE	util.py	/^DEFAULT_CODE = -1$/;"	v	line:10
+GAME_APPID_ALL_PATH	getGameData.py	/^GAME_APPID_ALL_PATH = ".\/data\/game_appid_all.txt"$/;"	v	line:11
+GAME_APPID_ALL_PATH	util.py	/^GAME_APPID_ALL_PATH = ".\/data\/game_appid_all.txt"$/;"	v	line:7
+GAME_AVERAGE_DATA_ADDED_PATH	getGameData.py	/^GAME_AVERAGE_DATA_ADDED_PATH = ".\/data\/game_average_data_added.csv"$/;"	v	line:10
+GAME_AVERAGE_DATA_ADDED_PATH	util.py	/^GAME_AVERAGE_DATA_ADDED_PATH = ".\/data\/game_average_data_added.csv"$/;"	v	line:6
+GAME_AVERAGE_DATA_PATH	getGameData.py	/^GAME_AVERAGE_DATA_PATH = ".\/data\/game_average_data.csv"$/;"	v	line:8
+GAME_AVERAGE_DATA_PATH	util.py	/^GAME_AVERAGE_DATA_PATH = ".\/data\/game_average_data.csv"$/;"	v	line:4
+GAME_USER_DATA_PATH	getGameData.py	/^GAME_USER_DATA_PATH = ".\/data\/game_user_data_filtered.csv"$/;"	v	line:9
+GAME_USER_DATA_PATH	model.py	/^GAME_USER_DATA_PATH = ".\/data\/game_user_data_filtered.csv"$/;"	v	line:7
+GAME_USER_DATA_PATH	util.py	/^GAME_USER_DATA_PATH = ".\/data\/game_user_data_filtered.csv"$/;"	v	line:5
+addGameAverageByUserData	getGameData.py	/^def addGameAverageByUserData():$/;"	f	line:48
+getAllGames	util.py	/^def getAllGames():$/;"	f	line:52
+getAvaerageFile	util.py	/^def getAvaerageFile():$/;"	f	line:28
+getAverageTime	util.py	/^def getAverageTime(appid):$/;"	f	line:77
+getGameTitle	util.py	/^def getGameTitle(appid):$/;"	f	line:42
+getPrevs	util.py	/^def getPrevs(obj):$/;"	f	line:65
+getRating	util.py	/^def getRating(playtime, averageTime):$/;"	f	line:12
+getUserDataRating	getGameData.py	/^def getUserDataRating():$/;"	f	line:17
+makeGameAveragePlayTime	getGameData.py	/^def makeGameAveragePlayTime():$/;"	f	line:91
+parse_rating	model.py	/^def parse_rating(line):$/;"	f	line:10
+preprocessUserData	getGameData.py	/^def preprocessUserData():$/;"	f	line:110
+train	model.py	/^def train():$/;"	f	line:17

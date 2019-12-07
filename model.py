@@ -1,17 +1,10 @@
 from pyspark import SparkContext
 from pyspark.mllib.recommendation import ALS, Rating
-from getGameData import getGameTitle
-from pyspark.ml.feature import StringIndexer
+from util import getGameTitle, parseRating
 
 
 GAME_USER_DATA_PATH = "./data/game_user_data_filtered.csv"
-
-
-def parse_rating(line):
-    # Parsing SteamID,AppID,Rating
-    line = line.split(',')
-    return Rating(int(line[0]), int(line[1]), float(line[2]))
-
+TRAINED_MODEL_PATH = "./data/"
 
 # Train and evaluate an ALS recommender.
 def train():
@@ -20,7 +13,7 @@ def train():
 
     # Load and parse the data
     data = sc.textFile(GAME_USER_DATA_PATH)
-    ratings = data.map(parse_rating)
+    ratings = data.map(parseRating)
 
     # Build the recommendation model using Alternating Least Squares
     rank = 8
@@ -34,19 +27,13 @@ def train():
     MSE = rates_and_preds.map(lambda r: (r[1][0] - r[1][1])**2).mean()
     print("Mean Squared Error = " + str(MSE) + "\n")
     
-    print("***** Top 10 Recommendations *****")
-    userID = 1
-    recommendations = model.recommendProducts(userID, 10)
-
-    # row : steamid , userid , rating
-    for row in recommendations:
-        print(getGameTitle(row[2]),":",row[2])
-    
     print("***** Train stopped *****")
     print("***** Start Saving Model *****")
     
-    StringIndexer(inputCol="foo", outputCol="bar").write().save("/data/")
-
+    model.save(sc, TRAINED_MODEL_PATH)
+    
+    print("***** Completed *****")
+    
+    
 if __name__ == "__main__":
     train()
-

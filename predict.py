@@ -1,6 +1,6 @@
 from pyspark import SparkContext
 from pyspark.mllib.recommendation import ALS, Rating, MatrixFactorizationModel
-from util import getGameTitle, parseRating
+from util import getGameTitle
 
 
 TRAINED_MODEL_PATH = "./data/"

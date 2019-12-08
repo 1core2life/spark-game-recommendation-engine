@@ -1,10 +1,16 @@
 from pyspark import SparkContext
 from pyspark.mllib.recommendation import ALS, Rating
-from util import getGameTitle, parseRating
+from util import getGameTitle
 
 
-GAME_USER_DATA_PATH = "./data/game_user_data_filtered.csv"
+GAME_USER_DATA_RATING_PATH = "./data/game_user_data_rating.csv"
 TRAINED_MODEL_PATH = "./data/"
+
+def parseRating(line):
+    # Parsing SteamID,AppID,Rating
+    line = line.split(',')
+    return Rating(int(line[0]), int(line[1]), float(line[2]))
+
 
 # Train and evaluate an ALS recommender.
 def train():
@@ -12,7 +18,7 @@ def train():
     sc = SparkContext("local[*]", "recommendationEngine")
 
     # Load and parse the data
-    data = sc.textFile(GAME_USER_DATA_PATH)
+    data = sc.textFile(GAME_USER_DATA_RATING_PATH)
     ratings = data.map(parseRating)
 
     # Build the recommendation model using Alternating Least Squares

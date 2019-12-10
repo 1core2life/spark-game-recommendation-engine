@@ -5,13 +5,13 @@ This is recommendation opensource with python + spark. The source is only for st
 
 ### 1. Dataset
 
-- User playtime data : it depend on how many user play the game 
+- User playtime data : It depend on how many user play the game 
 . /data/game_user_data.csv  
 . link : https://drive.google.com/drive/folders/1ESRLG9heVA5K4e0wYchkdi8KpqKOmh_b?usp=sharing  
 . data source : https://github.com/raghavjajodia/steamGameRec  
 . form : index , steamid(user) , appid(game) , playtime
 
-- User playtime data filtered : filtered upper playtime data  
+- User playtime data filtered : Filtered upper playtime data  
 . /data/game_user_data_filtered.csv  
 . form : steamid , appid , playtime  
 
@@ -19,15 +19,17 @@ This is recommendation opensource with python + spark. The source is only for st
 . /data/game_average_data.csv  
 . form : appid , playtime
 
-- User playtime data with rating : converting playtime to rating
+- User playtime data with rating : Converting playtime to rating
 . /data/game_average_data.csv  
 . form : appid , playtime
 
 
 
-### 2. Dataset preprocessing
+### 2. Dataset Preprocessing
 
-- user's rating is defined by playtime
+- User's rating is defined by playtime
+- We're going to look at this data with a proportional representation
+- More playtime, more be prefered
 
 > ★☆☆☆☆(1) = 0 < playtime < average/4
 > ★★☆☆☆(2) = average/4 <= playtime < average*3/4 
@@ -35,12 +37,13 @@ This is recommendation opensource with python + spark. The source is only for st
 > ★★★★☆(4) = average*5/4 <= playtime < average*7/4
 > ★★★★★(5) = average*7/4 <= playtime
 
+* Yes, If user play game not yet completly, the data become useless .. 
 
 
 ### 3. Execution
 
-> python model.py : create model
-> python predict.py : execute prediction with example user
+> python model.py : Create model
+> python predict.py : Execute prediction with example user
 
 
 ### 4. Process
@@ -48,5 +51,6 @@ This is recommendation opensource with python + spark. The source is only for st
 1. preprocessUserData() : game_user_data.csv -> game_user_data_filtered.csv
 2. addGameAverageByUserData() : Add average playtime by appid with game_user_data_filtered.csv
 3. getUserDataRating() : game_user_data_filtered.csv -> game_user_data_rating.csv
-4. train() : Train Model with pyspark
+4. train() : Training Model with pyspark
+5. predict() : Predicting item
 
